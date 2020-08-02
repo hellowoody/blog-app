@@ -1,11 +1,67 @@
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <meta name="description" content="woody hellowoody woodyhello woody博客 woody个人主页 hellowoody github"/>
         <title>{{title}}</title>
-        <link rel="stylesheet" type="text/css" href="./assets/base.css"> 
+        <link rel="icon" href="{{pathprefix}}favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="{{pathprefix}}assets/css/base.css"> 
+        <link rel="stylesheet" type="text/css" href="{{pathprefix}}assets/iconfont/iconfont.css"> 
     </head>
     <body>
-        {{content | safe}}
+        <div class="container">
+            <div class="left-wrapper">
+                <div class="left-wrapper-nav">
+                    <image class="portrait" src="{{pathprefix}}assets/imgs/portrait.png" alt="blog portrait">
+                    <div class="introduction">"My name is woody,but i am coder not director."</div>
+                    <div style="width: 100%;">
+                        <div class="introduction-table">
+                            <div class="iconfont icon-caidaniconwodehui"></div>
+                            <div class="introduction-table-font">woody</div>
+                        </div>
+                        <div class="introduction-table">
+                            <div class="iconfont icon-weibiaoti102"></div>
+                            <div class="introduction-table-font">Tianjin 天津</div>
+                        </div>
+                        <div class="introduction-table">
+                            <div class="iconfont icon-mail"></div>
+                            <div class="introduction-table-font">woodyhello@gmail.com</div>
+                        </div>
+                    </div>
+                    <div style="width:100%">
+                        <div style="margin-bottom:8px">发布工具</div>
+                        <div class="tools">
+                            <div class="tools-button" onclick="window.open('https://woodyhello.com/html/compress_pic/main.html','_blank');">爱丫,图</div>
+                            <div class="tools-button" onclick="window.open('https://hellowoody.github.io/searchBaiduMapCoordinate/','_blank');">坐标转换</div>
+                        </div>
+                    </div>
+                    <div class="links" >
+                        <div class="iconfont icon-github links-item" onclick="window.open('https://github.com/hellowoody','_blank');"></div>
+                        <div class="iconfont icon-bilibili-fill links-item" onclick="window.open('https://space.bilibili.com/37370017','_blank');"></div>
+                        <div class="iconfont icon-youtube-line links-item" onclick="window.open('https://www.youtube.com/channel/UCzqtMIUNXCJDhZHbIdcyAnw','_blank');"></div>
+                        <div class="iconfont icon-zhihu-fill links-item" onclick="window.open('https://www.zhihu.com/people/hellowoody','_blank');"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-wrapper">
+                {%- if tags != "blog" -%}
+                <div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;">
+                    <a class="btn-back" style="margin-right:12px;" href="javascript:void(0);" onclick="javascript:window.location.href='https://woodyhello.com/html/blog-app/index.html'">回到React版</a>
+                    <a class="btn-back" href="javascript:void(0);" onclick="javascript:window.location.href='https://woodyhello.com/html/person-website/index.html'">回到18版</a>
+                </div>
+                {%- endif -%}
+                {%- if tags == "blog" -%}
+                <div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;">
+                    <a class="btn-back" href="../../">回到首页</a>
+                </div>
+                <div>
+                    <img style="width:100%;border-radius: 6px;" src="{{randomImg}}" alt="a good image">
+                </div>
+                {%- endif -%}
+                {{content | safe}}
+            </div>
+        </div>
     </body>
 </html>

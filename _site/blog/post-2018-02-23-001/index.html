@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="woody hellowoody woodyhello woody博客 woody个人主页 hellowoody github"><title>多页面网站禁用浏览器后退键</title><link rel="icon" href="../../favicon.ico"><link rel="stylesheet" type="text/css" href="../../assets/css/base.css"><link rel="stylesheet" type="text/css" href="../../assets/iconfont/iconfont.css"></head><body><div class="container"><div class="left-wrapper"><div class="left-wrapper-nav"><image class="portrait" src="../../assets/imgs/portrait.png" alt="blog portrait"><div class="introduction">"My name is woody,but i am coder not director."</div><div style="width: 100%;"><div class="introduction-table"><div class="iconfont icon-caidaniconwodehui"></div><div class="introduction-table-font">woody</div></div><div class="introduction-table"><div class="iconfont icon-weibiaoti102"></div><div class="introduction-table-font">Tianjin 天津</div></div><div class="introduction-table"><div class="iconfont icon-mail"></div><div class="introduction-table-font">woodyhello@gmail.com</div></div></div><div style="width:100%"><div style="margin-bottom:8px">发布工具</div><div class="tools"><div class="tools-button" onclick="window.open('https://woodyhello.com/html/compress_pic/main.html','_blank');">爱丫,图</div><div class="tools-button" onclick="window.open('https://hellowoody.github.io/searchBaiduMapCoordinate/','_blank');">坐标转换</div></div></div><div class="links"><div class="iconfont icon-github links-item" onclick="window.open('https://github.com/hellowoody','_blank');"></div><div class="iconfont icon-bilibili-fill links-item" onclick="window.open('https://space.bilibili.com/37370017','_blank');"></div><div class="iconfont icon-youtube-line links-item" onclick="window.open('https://www.youtube.com/channel/UCzqtMIUNXCJDhZHbIdcyAnw','_blank');"></div><div class="iconfont icon-zhihu-fill links-item" onclick="window.open('https://www.zhihu.com/people/hellowoody','_blank');"></div></div></image></div></div><div class="right-wrapper"><div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;"><a class="btn-back" href="../../">回到首页</a></div><div><img style="width:100%;border-radius: 6px;" src="https://source.unsplash.com/random/900x300" alt="a good image"></div><h1>多页面网站禁用浏览器后退键</h1><p>如标题所说，本文提供的方法适用于多页面网站，如SPA单页面应用等不适用。</p><p>利用window.onpopstate和window.history.pushState 控制浏览器后退键失效，下面说一下如何实现。</p><p>1.在你需要禁止浏览器后退键的页面上加上下面的代码：</p><pre><code>&lt;script&gt;
+$(document).ready(function(){
+  //判断当前浏览器是否支持history和pushState,据我测试当前大部分浏览器都支持
+  if(window.history &amp;&amp; window.history.pushState){
+    window.history.pushState({},null,location.href);
+  }
+});
+&lt;/script&gt;
+</code></pre><p>当你加上上面的代码时，你发现当你点击一次浏览器的后退键，页面并没有后退，你可能感觉好像是解决问题了，但是当你再次点击后退键时页面还是返回到上一页面。</p><p>原因是window.history.pushState()方法是向浏览器历史添加了一个状态，它有三个参数分别是，一个状态对象（其实就是页面的参数），一个标题（现在被忽略了），以及一个可选的URL地址。</p><p>当你在页面上写了window.history.pushState({},null,location.href);浏览器会在history中添加location.href，同时页面并不跳转，但你只加了一次，所以只对一次后退事件起作用。如何彻底解决这个问题呢？还需要在全局增加onpopstate事件，详情请看第2步。</p><p>2.在全局增加一个onpopstate事件，这里我用的是匿名函数（当然也可以直接写）：</p><pre><code>;(function(window,undefined){
+  'use strict'
+  //判断当前浏览器是否支持history和pushState,据我测试当前大部分浏览器都支持
+  if(window.history &amp;&amp; window.history.pushState)
+  {
+    window.onpopstate = function(){
+      window.history.pushState({},null,&quot;&quot;);
+      //window.history.forward(1);  这句我没理解什么意思，不加也可以实现，所以注释掉了
+    }
+  }
+})(window);
+</code></pre><p>这时你发现，在你的目标页面上点击浏览器回退键页面不会跳转了，问题解决。但是上面的代码是什么意思呢？</p><p>window.onpopstate事件会监听浏览器的后退、前进按钮（或者在JavaScript代码中调用类似history.back()、history.forward()、history.go()方法），但是调用像 history.pushState() 或者history.replaceState() 不会触发popstate事件。</p><p>所以我们在全局中增加popstate监听事件，一但用户点击后退按钮时就会触发这个方法，该方法会再次向histroy中添加一个链接，防止用户再一次点击后退按钮。</p></div></div></body></html>

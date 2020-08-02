@@ -1,0 +1,92 @@
+<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="woody hellowoody woodyhello woody博客 woody个人主页 hellowoody github"><title>sqlserver2005 存储过程模板及调用</title><link rel="icon" href="../../favicon.ico"><link rel="stylesheet" type="text/css" href="../../assets/css/base.css"><link rel="stylesheet" type="text/css" href="../../assets/iconfont/iconfont.css"></head><body><div class="container"><div class="left-wrapper"><div class="left-wrapper-nav"><image class="portrait" src="../../assets/imgs/portrait.png" alt="blog portrait"><div class="introduction">"My name is woody,but i am coder not director."</div><div style="width: 100%;"><div class="introduction-table"><div class="iconfont icon-caidaniconwodehui"></div><div class="introduction-table-font">woody</div></div><div class="introduction-table"><div class="iconfont icon-weibiaoti102"></div><div class="introduction-table-font">Tianjin 天津</div></div><div class="introduction-table"><div class="iconfont icon-mail"></div><div class="introduction-table-font">woodyhello@gmail.com</div></div></div><div style="width:100%"><div style="margin-bottom:8px">发布工具</div><div class="tools"><div class="tools-button" onclick="window.open('https://woodyhello.com/html/compress_pic/main.html','_blank');">爱丫,图</div><div class="tools-button" onclick="window.open('https://hellowoody.github.io/searchBaiduMapCoordinate/','_blank');">坐标转换</div></div></div><div class="links"><div class="iconfont icon-github links-item" onclick="window.open('https://github.com/hellowoody','_blank');"></div><div class="iconfont icon-bilibili-fill links-item" onclick="window.open('https://space.bilibili.com/37370017','_blank');"></div><div class="iconfont icon-youtube-line links-item" onclick="window.open('https://www.youtube.com/channel/UCzqtMIUNXCJDhZHbIdcyAnw','_blank');"></div><div class="iconfont icon-zhihu-fill links-item" onclick="window.open('https://www.zhihu.com/people/hellowoody','_blank');"></div></div></image></div></div><div class="right-wrapper"><div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;"><a class="btn-back" href="../../">回到首页</a></div><div><img style="width:100%;border-radius: 6px;" src="https://source.unsplash.com/random/900x300" alt="a good image"></div><h1>sqlserver2005 存储过程模板及调用</h1><p>本模板主要提供快速创建一个存储过程</p><p>本例子中包含：循环游标，事务</p><pre><code>USE [数据库名称]
+GO
+/******    脚本日期: 11/25/2014 01:05:48 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [用户].[存储过程名称] 
+    @epId varchar(20),
+    @bizname varchar(150),
+    @resValue varchar(2) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    declare @epName varchar(500);
+    declare @belongSepa varchar(6);
+    declare @processinstid numeric(18, 0);
+    declare @orgid numeric(10, 0);
+    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+        set @resValue = 0;
+    declare order_cursor CURSOR LOCAL FORWARD_ONLY KEYSET SCROLL_LOCKS FOR select ep_name,belong_sepa,processinstid,orgid from ENTERPRISE where ep_id = @epId;    
+    OPEN order_cursor
+    --开始循环游标变量
+    FETCH NEXT FROM order_cursor INTO @epName,@belongSepa,@processinstid,@orgid;
+    WHILE (@@FETCH_STATUS = 0)
+    BEGIN
+    insert into BAK_OLD_EPINFO values (@epId,@epName,@processinstid,@orgid,@belongSepa,getdate());
+    if (@@ERROR=0)
+    BEGIN
+        SET @resValue=0; --成功
+        delete from ENTERPRISE where ep_id = @epId;
+    END
+    ELSE
+    BEGIN
+        SET @resValue=1; --失败
+    END
+    FETCH NEXT FROM order_cursor INTO @epName,@belongSepa,@processinstid,@orgid;    
+    END
+    CLOSE order_cursor
+    DEALLOCATE order_cursor
+    SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+END
+</code></pre><pre><code>set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+go
+
+
+
+ALTER PROCEDURE [dbo].[deleteAMANDTPByAMID] 
+    -- Add the parameters for the stored procedure here
+    @amId varchar(20),
+    @resValue varchar(2) OUTPUT
+    --0 成功 1 失败 2 计划在审批
+AS
+BEGIN
+    declare @tpid varchar(20);
+    declare @epidcs varchar(20);
+    declare @epidcz varchar(20);
+    declare @processid numeric(18, 0);
+    SET NOCOUNT ON;
+    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+    BEGIN
+        select @tpid=tp_id,@epidcs=en_id_cs,@epidcz=en_id_cz,@processid=PROCESSINSTID from TRANSFER_PLAN where am_id=@amId;
+        if (@processid is not null)
+        BEGIN
+            set @resValue = '2';
+        END
+        ELSE
+        BEGIN
+            insert BAK_OLD_AMTP (am_id,tp_id,ep_id_cs,ep_id_cz,sysdate) values (@amid,@tpid,@epidcs,@epidcz,getdate());
+            if (@@ERROR=0)
+            BEGIN
+                set @resValue = '0';
+                update AGREEMENT set status='1' where am_id=@amId;
+                update TRANSFER_PLAN set status='1' where am_id=@amId;
+            END
+            ELSE
+            BEGIN
+                SET @resValue= '1'; --失败
+            END
+        END
+    END
+    SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+END
+</code></pre><p>如何调用的语句例子</p><pre><code>declare @epid varchar(50);
+declare @epname varchar(500);
+declare @resvalue varchar(500);
+set @epid = '123456';
+set @epname = 'xxxxxx';
+exec [用户].[存储过程名称] @epid,@epname,@resvalue output
+print @resvalue;
+</code></pre></div></div></body></html>
