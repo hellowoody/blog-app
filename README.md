@@ -1,2 +1,2 @@
-# blog-app-11th
- personal blog app by 11th
+# blog-app-11ty
+ personal blog app by 11ty
