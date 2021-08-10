@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="UTF-8"><title>readme</title><style type="text/css">pre {
+                background-color: #f6f8fa;
+                padding: 8px 16px 8px 16px;
+            }</style></head><body><h1>介绍</h1><ul><li>介绍个人网站历史。原先是纯html 然后今年用react graphql，现在用11th</li><li>因为看了2020 google web大会 推荐11th，体验之后感觉比nextjs 更友好，我看中的是编译好的代码可以 很容易用任何发布工具发布，而nextjs 还是用node发布最友好</li><li>11th 可以使用 numjucks模板 类似jinja2，虽然我也没用过jinja，但是很容易掌握</li></ul><h1>11th blog steps:</h1><h2>step 1:</h2><pre><code>mkdir project name
+cd project name
+npm init
+npm install --save-dev @11ty/eleventy
+</code></pre><h2>step 2:</h2><pre><code>official web tutorial 
+echo '# Page header' &gt; README.md
+npx @11ty/eleventy
+npx @11th/eleventy --serve
+</code></pre><h2>step 3:</h2><pre><code>touch .eleventy.js config file ,then edit it
+mkdir ./src
+mkdir ./src/index.md
+npx @11th/eleventy --serve
+</code></pre><h2>step 4:</h2><pre><code>mkdir ./src/_includes
+touch ./src/_includes/base.njk
+edit index.md 传参数
+</code></pre><h2>step 5</h2><pre><code>mkdir ./src/assets
+edit .eleventy.js add passthroughCopy
+touch ./src/assets/base.css
+edit ./src/index.md add link css reference
+</code></pre></body></html>

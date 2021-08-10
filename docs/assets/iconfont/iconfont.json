@@ -1,0 +1,86 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "461781",
+      "name": "address",
+      "font_class": "weibiaoti102",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "569546",
+      "name": "personal",
+      "font_class": "caidaniconwodehui",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "3876518",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "7205933",
+      "name": "Mail",
+      "font_class": "Mail",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "9289070",
+      "name": "mail",
+      "font_class": "mail",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "10746955",
+      "name": "wechat",
+      "font_class": "wechat",
+      "unicode": "e513",
+      "unicode_decimal": 58643
+    },
+    {
+      "icon_id": "10918077",
+      "name": "bilibili-fill",
+      "font_class": "bilibili-fill",
+      "unicode": "e75c",
+      "unicode_decimal": 59228
+    },
+    {
+      "icon_id": "10918196",
+      "name": "wechat-fill",
+      "font_class": "wechat-fill",
+      "unicode": "e775",
+      "unicode_decimal": 59253
+    },
+    {
+      "icon_id": "10918201",
+      "name": "youtube-fill",
+      "font_class": "youtube-fill",
+      "unicode": "e777",
+      "unicode_decimal": 59255
+    },
+    {
+      "icon_id": "10918211",
+      "name": "youtube-line",
+      "font_class": "youtube-line",
+      "unicode": "e77a",
+      "unicode_decimal": 59258
+    },
+    {
+      "icon_id": "10918214",
+      "name": "zhihu-fill",
+      "font_class": "zhihu-fill",
+      "unicode": "e77b",
+      "unicode_decimal": 59259
+    }
+  ]
+}
