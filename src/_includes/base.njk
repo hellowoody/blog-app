@@ -61,6 +61,15 @@
                 </div>
                 {%- endif -%}
                 {{content | safe}}
+                {%-if tags=="blog" -%}
+                <script src="https://utteranc.es/client.js"
+                        repo="hellowoody/blog-app"
+                        issue-term="pathname"
+                        theme="github-light"
+                        crossorigin="anonymous"
+                        async>
+                </script>
+                {%- endif -%}
             </div>
         </div>
     </body>
