@@ -18,5 +18,5 @@ $(document).ready(function(){
   }
 })(window);
 </code></pre><p>这时你发现，在你的目标页面上点击浏览器回退键页面不会跳转了，问题解决。但是上面的代码是什么意思呢？</p><p>window.onpopstate事件会监听浏览器的后退、前进按钮（或者在JavaScript代码中调用类似history.back()、history.forward()、history.go()方法），但是调用像 history.pushState() 或者history.replaceState() 不会触发popstate事件。</p><p>所以我们在全局中增加popstate监听事件，一但用户点击后退按钮时就会触发这个方法，该方法会再次向histroy中添加一个链接，防止用户再一次点击后退按钮。</p><style>.utterances {
-                        max-width: unset;
-                    }</style><script src="https://utteranc.es/client.js" repo="hellowoody/blog-app" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script></div></div></body></html>
+        max-width: unset;
+    }</style><script src="https://utteranc.es/client.js" repo="hellowoody/blog-app" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script></div></div></body></html>

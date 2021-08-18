@@ -1,0 +1,23 @@
+---
+layout: base.njk
+---
+
+<div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;">
+    <a class="btn-back" href="../../">回到首页</a>
+</div>
+<div>
+    <img style="width:100%;border-radius: 6px;" src="{{randomImg}}" alt="a good image">
+</div>
+{{content | safe}}
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+<script src="https://utteranc.es/client.js"
+        repo="hellowoody/blog-app"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>

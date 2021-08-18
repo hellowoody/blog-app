@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -46,35 +45,7 @@
                 </div>
             </div>
             <div class="right-wrapper">
-                {%- if tags != "blog" -%}
-                <div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;">
-                    <a class="btn-back" style="margin-right:12px;" href="javascript:void(0);" onclick="javascript:window.location.href='https://woodyhello.com/html/blog-app/index.html'">回到React版</a>
-                    <a class="btn-back" href="javascript:void(0);" onclick="javascript:window.location.href='https://woodyhello.com/html/person-website/index.html'">回到18版</a>
-                </div>
-                {%- endif -%}
-                {%- if tags == "blog" -%}
-                <div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;">
-                    <a class="btn-back" href="../../">回到首页</a>
-                </div>
-                <div>
-                    <img style="width:100%;border-radius: 6px;" src="{{randomImg}}" alt="a good image">
-                </div>
-                {%- endif -%}
                 {{content | safe}}
-                {%-if tags=="blog" -%}
-                <style>
-                    .utterances {
-                        max-width: unset;
-                    }
-                </style>
-                <script src="https://utteranc.es/client.js"
-                        repo="hellowoody/blog-app"
-                        issue-term="pathname"
-                        theme="github-light"
-                        crossorigin="anonymous"
-                        async>
-                </script>
-                {%- endif -%}
             </div>
         </div>
     </body>

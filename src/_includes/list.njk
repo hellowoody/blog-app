@@ -1,0 +1,29 @@
+---
+layout: base.njk
+---
+<div style="width: 100%;display: flex;justify-content: flex-end;margin-bottom:12px;">
+    <a class="btn-back" style="margin-right:12px;" href="javascript:void(0);" onclick="javascript:window.location.href='https://woodyhello.com/html/blog-app/index.html'">回到React版</a>
+    <a class="btn-back" href="javascript:void(0);" onclick="javascript:window.location.href='https://woodyhello.com/html/person-website/index.html'">回到18版</a>
+</div>
+{{content | safe}}
+
+<style>
+.a-page {
+    text-decoration:none;
+}
+a[aria-current="page"].a-page {
+    color:#aaa;
+}
+</style>
+
+<div style="width:500px;margin-top:32px;display:flex;justify-content:space-around;color:#aaa;">
+    <div>{% if pagination.href.previous %}<a class="a-page" href="{{ pagination.href.previous }}">上一页</a>{% else %}上一页{% endif %}</div>
+    {%- for pageEntry in pagination.pages -%}
+        <div>
+        <a class="a-page" href="{{pagination.hrefs[loop.index0]}}" {% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>
+            {{loop.index}}
+        </a>
+        </div>
+    {%- endfor -%}
+    <div>{% if pagination.href.next %}<a class="a-page" href="{{ pagination.href.next }}">下一页</a>{% else %}下一页{% endif %}</div>
+</div>
