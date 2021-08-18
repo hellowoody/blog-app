@@ -1,7 +1,7 @@
 ---
 layout: list.njk
 title: woody个人主页
-pathprefix: /blog-app/
+pathprefix: /
 permalink: "{% if pagination.pageNumber == 0 %}/{% else %}pages/{{pagination.pageNumber}}/index.html{% endif %}"
 tags: "bloglist"
 pagination: 
