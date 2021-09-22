@@ -8,6 +8,30 @@ layout: base.njk
 {{content | safe}}
 
 <style>
+
+ul {
+    color:#0000008A;
+    font-size:15px;
+    padding:0px;
+}
+
+ul li {
+    box-shadow:0px 2px 10px rgb(0 0 0 / 0.1);
+    border-radius:8px;
+    padding:6px;
+    list-style-type: none;
+    box-sizing:border-box;
+    margin-top:16px;
+}
+
+ul li:hover {
+    box-shadow:0px 6px 12px rgb(0 0 0 / 0.15);
+}
+
+a {
+    text-decoration:none;
+}
+
 .a-page {
     text-decoration:none;
 }
@@ -16,7 +40,7 @@ a[aria-current="page"].a-page {
 }
 </style>
 
-<div style="width:500px;margin-top:32px;display:flex;justify-content:space-around;color:#aaa;">
+<div style="width:500px;margin-top:32px;display:flex;justify-content:space-around;color:#0000008A;">
     <div>{% if pagination.href.previous %}<a class="a-page" href="{{ pathprefix+pagination.href.previous.substr(1)  }}">上一页</a>{% else %}上一页{% endif %}</div>
     {%- for pageEntry in pagination.pages -%}
         <div>
